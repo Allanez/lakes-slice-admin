@@ -1,5 +1,20 @@
 # lakes-slice-admin
 
+## Installation
+
+``` bash
+# clone the repo
+$ git clone https://github.com/Allanez/lakes-slice-admin
+
+# go into app's directory
+$ cd lakes-slice-admin/laravel
+
+# install app's dependencies
+$ composer install
+
+# install app's dependencies
+$ npm install
+
 Usage
 
 # serve with hot reload at localhost:8080
