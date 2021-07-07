@@ -12,7 +12,9 @@
         "league/flysystem-aws-s3-v3": "^2.1",
         "spatie/laravel-permission": "^4.2",
         "symfony/twig-pack": "^1.0",
+        "thedevsaddam/lumen-route-list": "^2.0",
         "tymon/jwt-auth": "dev-develop"
+        
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

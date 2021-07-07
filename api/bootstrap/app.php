@@ -108,6 +108,9 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
 ]);
 
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
@@ -130,13 +133,12 @@ $app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
 // $app->register(Illuminate\Foundation\Auth\User::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
-$app->register(Fruitcake\Cors\CorsServiceProvider::class);
-$app->configure('cors');
+// $app->register(Fruitcake\Cors\CorsServiceProvider::class);
+// $app->configure('cors');
 
-$app->middleware([
-    App\Http\Middleware\CorsMiddleware::class
- ]);
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class);
 
+ $app->register(\Thedevsaddam\LumenRouteList\LumenRouteListServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

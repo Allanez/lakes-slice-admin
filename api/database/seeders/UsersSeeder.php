@@ -11,7 +11,7 @@ use App\Models\User;
 use App\Models\RoleHierarchy;
 use Carbon\Carbon;
 
-class UsersAndNotesSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.

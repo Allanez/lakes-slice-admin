@@ -30,12 +30,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+// $router->group(['prefix' => 'api', function() use ($router){
+//     $router->post('login', ['uses' => 'AuthController@login']);
+// }]);
+
+
 $router->group(['middleware' => 'auth'], function () use ($router) {
     $router->get('broadcasting/auth', ['uses' => 'BroadcastController@authenticate']);
     $router->post('broadcasting/auth', ['uses' => 'BroadcastController@authenticate']);
 });
 
-$router->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], function () use ($router){
+$router->group(['prefix' => 'api', 'middleware' => 'api'], function () use ($router){
     $router->get('menu', ['uses' => 'MenuController@index']);
 
     $router->post('login', ['uses' => 'AuthController@login']);
@@ -48,27 +53,27 @@ $router->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], f
     // resource('resource/{table}/resource', 'ResourceController', 0);
     $uri = 'resource/{table}/resource';
     $controller = 'ResourceController';
-    $router->get($uri, 'App\Http\Controllers\\'.$controller.'@index');
-    $router->post($uri, 'App\Http\Controllers\\'.$controller.'@store');
-    $router->get($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@show');
-    $router->get($uri.'/{id}/edit', 'App\Http\Controllers\\'.$controller.'@edit');
-    $router->put($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-    $router->patch($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-    $router->delete($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@destroy');
+    $router->get($uri, $controller.'@index');
+    $router->post($uri, $controller.'@store');
+    $router->get($uri.'/{id}', $controller.'@show');
+    $router->get($uri.'/{id}/edit', $controller.'@edit');
+    $router->put($uri.'/{id}', $controller.'@update');
+    $router->patch($uri.'/{id}', $controller.'@update');
+    $router->delete($uri.'/{id}', $controller.'@destroy');
 
-    $router->group(['middleware' => 'admin', 'namespace' => 'App\Http\Controllers'], function () use ($router){
+    $router->group(['middleware' => 'admin'], function () use ($router){
         
         //Create Mail Resource
         // resource('mail', 'MailController', 0);
         $uri = 'mail';
         $controller = 'MailController';
-        $router->get($uri, 'App\Http\Controllers\\'.$controller.'@index');
-        $router->post($uri, 'App\Http\Controllers\\'.$controller.'@store');
-        $router->get($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@show');
-        $router->get($uri.'/{id}/edit', 'App\Http\Controllers\\'.$controller.'@edit');
-        $router->put($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-        $router->patch($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-        $router->delete($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@destroy');
+        $router->get($uri, $controller.'@index');
+        $router->post($uri, $controller.'@store');
+        $router->get($uri.'/{id}', $controller.'@show');
+        $router->get($uri.'/{id}/edit', $controller.'@edit');
+        $router->put($uri.'/{id}', $controller.'@update');
+        $router->patch($uri.'/{id}', $controller.'@update');
+        $router->delete($uri.'/{id}', $controller.'@destroy');
 
         $router->get('prepareSend/{id}', [
             'as' => 'prepareSend', 'uses' => 'MailController@prepareSend'
@@ -81,25 +86,25 @@ $router->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], f
         // resource('bread',  'BreadController', 0);
         $uri = 'bread';
         $controller = 'BreadController';
-        $router->get($uri, 'App\Http\Controllers\\'.$controller.'@index');
-        $router->post($uri, 'App\Http\Controllers\\'.$controller.'@store');
-        $router->get($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@show');
-        $router->get($uri.'/{id}/edit', 'App\Http\Controllers\\'.$controller.'@edit');
-        $router->put($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-        $router->patch($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-        $router->delete($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@destroy');
+        $router->get($uri, $controller.'@index');
+        $router->post($uri, $controller.'@store');
+        $router->get($uri.'/{id}', $controller.'@show');
+        $router->get($uri.'/{id}/edit', $controller.'@edit');
+        $router->put($uri.'/{id}', $controller.'@update');
+        $router->patch($uri.'/{id}', $controller.'@update');
+        $router->delete($uri.'/{id}', $controller.'@destroy');
 
         // resource('users', 'UsersController', 2);
         $uri = 'users';
         $controller = 'UsersController';
-        $router->get($uri, 'App\Http\Controllers\\'.$controller.'@index');
-        $router->get($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@show');
-        $router->get($uri.'/{id}/edit', 'App\Http\Controllers\\'.$controller.'@edit');
-        $router->put($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-        $router->patch($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-        $router->delete($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@destroy');
+        $router->get($uri, $controller.'@index');
+        $router->get($uri.'/{id}', $controller.'@show');
+        $router->get($uri.'/{id}/edit', $controller.'@edit');
+        $router->put($uri.'/{id}', $controller.'@update');
+        $router->patch($uri.'/{id}', $controller.'@update');
+        $router->delete($uri.'/{id}', $controller.'@destroy');
 
-        $router->group(['prefix' => 'menu/menu', 'namespace' => 'App\Http\Controllers'], function () use ($router){
+        $router->group(['prefix' => 'menu/menu'], function () use ($router){
             $router->get('/', [
                 'as' => 'menu.menu.index', 'uses' => 'MenuEditController@index'
             ]);
@@ -120,7 +125,7 @@ $router->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], f
             ]);
         });
 
-        $router->group(['prefix' => 'menu/element', 'namespace' => 'App\Http\Controllers'], function () use ($router){
+        $router->group(['prefix' => 'menu/element'], function () use ($router){
             $router->get('/', [
                 'as' => 'menu.index', 'uses' => 'MenuElementController@index'
             ]);
@@ -175,14 +180,14 @@ $router->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], f
         // resource('roles', 'RolesController', 1);
         $uri = 'roles';
         $controller = 'RolesController';
-        $router->get($uri, 'App\Http\Controllers\\'.$controller.'@index');
-        $router->get($uri.'/create', 'App\Http\Controllers\\'.$controller.'@create');
-        $router->post($uri, 'App\Http\Controllers\\'.$controller.'@store');
-        $router->get($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@show');
-        $router->get($uri.'/{id}/edit', 'App\Http\Controllers\\'.$controller.'@edit');
-        $router->put($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-        $router->patch($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@update');
-        $router->delete($uri.'/{id}', 'App\Http\Controllers\\'.$controller.'@destroy');
+        $router->get($uri, $controller.'@index');
+        $router->get($uri.'/create', $controller.'@create');
+        $router->post($uri, $controller.'@store');
+        $router->get($uri.'/{id}', $controller.'@show');
+        $router->get($uri.'/{id}/edit', $controller.'@edit');
+        $router->put($uri.'/{id}', $controller.'@update');
+        $router->patch($uri.'/{id}', $controller.'@update');
+        $router->delete($uri.'/{id}', $controller.'@destroy');
 
         $router->get('/roles/move/move-up', [
             'as' => 'roles.up', 'uses' => 'RolesController@moveUp'
